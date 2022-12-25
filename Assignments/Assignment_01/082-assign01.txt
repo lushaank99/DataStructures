@@ -1,0 +1,132 @@
+/*
+Roll No - 20170010082
+File Name - 082-assign01.txt
+This is written in cpp
+*/
+
+/*
+Space Complexity: O(n) for creating a another set of elements apart from array in a tree
+Time Complexity: O(nlogn) for traversing in a tree
+*/
+
+#include <iostream>
+#include <time.h>
+#include <stdlib.h>
+
+using namespace std;
+
+typedef struct node{
+int data;
+struct node* left;
+struct node* right;
+}NODE;
+
+int dec2bin (int num){
+int e=1, chan=0;
+	while (num > 0){
+	chan += (num%(e*10))*e;
+	}
+return chan;
+}
+
+/* We insert the numbers from starting index of 1 and convert them in binary as 2 = 10 and '1' is base at the top and next digit represents left or right and so..on. 1001 means from root go left and again left, you will find the number to it's right */  
+
+void insertNode(NODE* root; int i; int val){
+NODE* a = new NODE;
+a->data = val;
+a->left = NULL;
+a->right = NULL;
+NODE* b = root;
+	if (i == 1)
+	root = a;
+
+//Converting decimal to binary
+
+int num = dec2bin(i);
+int dum = num, c = 0, e=1, k;
+while (dum > 1){
+	dum /= 10;
+	c++;
+	e *= 10;
+	}
+
+// Checking the position for next by level ordering
+
+for (e > 0){
+	if (e > 1){
+		k = (num%e)/(e/10)
+		if (k == 0)
+			b = b->left;
+		else
+			b = b->right;	
+		}
+	else if (e == 1){
+		k = (num%e)
+		if (k == 0)
+			b->left == a;
+		else
+			b->right == a;
+		}
+	e /= 10;
+	}
+}
+
+NODE* inorder(NODE* root){
+if (root != NULL){
+	inorder (root->left);
+	cout << root->data;
+	inorder (root->right);
+	}
+return;
+}
+
+void leveltra (NODE* root, int num){
+for (int i=1; i<=num ; i++){
+	NODE* a = root;
+	int num = dec2bin(i);
+	if (num == 1)
+		cout << a->value << '\n';
+	else{
+		int dum = num;
+		int c = 0, e = 1 , k;
+		for (dum > 1){
+			dum /= 10;
+			c++;
+			e *= 10;
+			}
+		for (e > 0){
+			if (e > 1){
+				k = (num%e)/(e/10)
+				if (k == 0)
+					a = a->left;
+				else
+					a = a->right;	
+				}
+			else if (e == 1)
+				cout << a->data << '\n';
+			e /= 10;
+			}	
+		}
+	}
+}
+
+int main(){
+srand((unsigned int) time(NULL);
+int n;
+cout << "Enter the number of values in an array ";
+cin >> n;
+int arr[n];
+cout << "\n Printing the array \n";
+	for (int i=0; i<n ; i++){
+	arr[i] = rand()%1000;
+	cout << arr[i] << " ";
+	}
+NODE* root = NULL;
+	for (int i=0; i<n ; i++)
+	insertNode(root, i+1 , arr[i]);
+cout << "\n Printing the Inorder tree \n";
+inorder (root);
+cout << "\n Level Traversal \n";
+leveltra (root, n);
+cout << "\n";
+}
